@@ -4,11 +4,12 @@ echo "WelCome in gambler simulator"
 #Constant
 STAKE=100
 BET=1
-DAYZ=20
+
 #variables
 totalAmt=0
-
 cash=$STAKE
+
+declare -A  dailyProfitOrLoss
 
 function gameStart()	
 	{
@@ -31,6 +32,7 @@ function gameStart()
 	}
 function totalAmount() 
 	{
+		local DAYZ=20
 		for (( i=1; i<=$DAYZ; i++ ))
 		do
 			local dailyStake=0 
@@ -38,17 +40,20 @@ function totalAmount()
 			cash=$STAKE
 			gameStart
 			dailyStake=$(( $cash - $STAKE))
-			echo "todays profitOrloss  " $dailyStake
+			dailyProfitOrLoss[$i]="$dailyStake"
 			totalAmt=$(( $totalAmt + $dailyStake ))
 		done
 		echo "total amount : $totalAmt"
+
+		for k in "${!dailyProfitOrLoss[@]}"
+                do
+                        echo $k: ${dailyProfitOrLoss["$k"]}
+	        done | sort -n -k1
+
 	}
 
 
-
-
-
+#dayWonOrLost
 totalAmount
-#winOrLoose
 #gameStart
 
