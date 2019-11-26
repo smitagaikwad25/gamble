@@ -10,10 +10,15 @@ BET=1
 totalAmt=0
 >>>>>>> uc4_After20DaysKnowTheTotalAmountWonORloose
 
+<<<<<<< HEAD
 maxLimit=$((50*100/$STAKE+ $STAKE ))
 echo $maxLimit
 minLimit=$(($maxLimit - $STAKE ))
 echo $minLimit
+=======
+declare -A  dailyProfitOrLoss
+declare -A  finalAmt
+>>>>>>> uc6_checkLuckiestAndunluckiestDay
 
 function gameStart()
 	{
@@ -68,12 +73,39 @@ function totalAmount()
 			dailyStake=$(( $cash - $STAKE))
 			echo "todays profitOrloss  " $dailyStake
 			totalAmt=$(( $totalAmt + $dailyStake ))
+			finalAmt[$i]="$totalAmt"
 		done
 		echo "total amount : $totalAmt"
+<<<<<<< HEAD
 	}
 
 
 
+=======
+		echo "displaying daily profit loss"
+		for k in "${!dailyProfitOrLoss[@]}"
+                do
+                        echo $k: ${dailyProfitOrLoss["$k"]}
+	        done | sort -n -k1
+
+		echo
+
+		echo ${finalAmt[@]} 
+		worstStats=`for k in "${!finalAmt[@]}"
+                do
+                        echo $k" : "${finalAmt[$k]}
+	        done | sort -n -k3 | head -1`
+
+		luckiestStats=`for f in "${!finalAmt[@]}"
+		do
+		 echo $f" : "${finalAmt[$f]}
+		done | sort -rn -k3 | head -1`
+
+		echo "best day :  $luckiestStats"
+		echo "worst day : $worstStats"
+
+	}
+>>>>>>> uc6_checkLuckiestAndunluckiestDay
 
 
 totalAmount
