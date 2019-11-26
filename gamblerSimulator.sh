@@ -1,4 +1,5 @@
-#!/bin bash -x
+#!/bin/bash -x
+
 echo "WelCome in gambler simulator"
 
 #Constant
@@ -19,6 +20,7 @@ declare -A  finalAmt
 
 function gameStart()	
 	{
+		local cash=$STAKE
 		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
 		do
 
@@ -40,9 +42,7 @@ function totalAmount()
 	{
 		local DAYS=20
 		for (( i=1; i<=$DAYS; i++ ))
-		do
-			local dailyStake=0 
-			local result=0
+		do 
 			cash=$STAKE
 			while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
                 	do
@@ -85,11 +85,7 @@ function totalAmount()
 
 		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
-
-
 	}
 
-
-totalAmount
+totalAmount 
 #gameStart
-
