@@ -4,15 +4,18 @@ echo "WelCome in gambler simulator"
 #Constant
 STAKE=100
 BET=1
-DAYZ=20
 #variables
 totalAmt=0
 
-cash=$STAKE
+maxLimit=$((50*100/$STAKE+ $STAKE ))
+echo $maxLimit
+minLimit=$(($maxLimit - $STAKE ))
+echo $minLimit
 
-function gameStart()	
+function gameStart()
 	{
-		while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+		local cash=$STAKE
+		while [ $cash -lt $maxlimit ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
@@ -31,12 +34,25 @@ function gameStart()
 	}
 function totalAmount() 
 	{
-		for (( i=1; i<=$DAYZ; i++ ))
+		local DAYS=20
+		for (( i=1; i<=$DAYS; i++ ))
 		do
-			local dailyStake=0 
-			local result=0
-			cash=$STAKE
-			gameStart
+			local dailyStake=0
+			local cash=$STAKE
+			while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
+	                do
+
+                        	random=$((RANDOM%2))
+                        	if [ $random -eq 1 ]
+                        	then
+                                	cash=$(( $cash + $BET ))
+                                	echo $cash
+                        	else 
+                                	cash=$(( $cash - $BET ))
+                                	echo $cash
+                        	fi
+
+                	done
 			dailyStake=$(( $cash - $STAKE))
 			echo "todays profitOrloss  " $dailyStake
 			totalAmt=$(( $totalAmt + $dailyStake ))
