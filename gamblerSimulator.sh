@@ -7,14 +7,19 @@ BET=1
 
 #variables
 totalAmt=0
-cash=$STAKE
+
+maxLimit=$((50*100/$STAKE+ $STAKE ))
+echo $maxLimit
+minLimit=$(($maxLimit - $STAKE ))
+echo $minLimit
+
 
 declare -A  dailyProfitOrLoss
 declare -A  finalAmt
 
 function gameStart()	
 	{
-		while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
@@ -33,45 +38,58 @@ function gameStart()
 	}
 function totalAmount() 
 	{
-		local DAYZ=20
-		for (( i=1; i<=$DAYZ; i++ ))
+		local DAYS=20
+		for (( i=1; i<=$DAYS; i++ ))
 		do
 			local dailyStake=0 
 			local result=0
 			cash=$STAKE
-			gameStart
+			while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
+                	do
+
+                        	random=$((RANDOM%2))
+                        	if [ $random -eq 1 ]
+                        	then
+                                	cash=$(( $cash + $BET ))
+                                	echo $cash
+                        	else 
+                                	cash=$(( $cash - $BET ))
+                               		echo $cash
+                        	fi
+
+                	done
 			dailyStake=$(( $cash - $STAKE))
 			dailyProfitOrLoss[$i]="$dailyStake"
 			totalAmt=$(( $totalAmt + $dailyStake ))
 			finalAmt[$i]="$totalAmt"
 		done
 		echo "total amount : $totalAmt"
-		echo "displaying daily profit loss"
+
 		for k in "${!dailyProfitOrLoss[@]}"
                 do
                         echo $k: ${dailyProfitOrLoss["$k"]}
 	        done | sort -n -k1
 
-		echo
-
 		echo ${finalAmt[@]} 
+
 		worstStats=`for k in "${!finalAmt[@]}"
                 do
                         echo $k" : "${finalAmt[$k]}
 	        done | sort -n -k3 | head -1`
 
+
 		luckiestStats=`for f in "${!finalAmt[@]}"
 		do
-		 echo $f" : "${finalAmt[$f]}
+		 	echo $f" : "${finalAmt[$f]}
 		done | sort -rn -k3 | head -1`
 
-		echo "best day :  $luckiestStats"
+		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
+
 
 	}
 
 
-#dayWonOrLost
 totalAmount
 #gameStart
 
