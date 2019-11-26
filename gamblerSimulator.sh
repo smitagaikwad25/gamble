@@ -33,7 +33,7 @@ function gameStart()
 function totalAmount() 
 	{
 		local playAgain=0
-		local DAYZ=2
+		local DAYZ=20
 		for (( i=1; i<=$DAYZ; i++ ))
 		do
 			local dailyStake=0 
