@@ -40,8 +40,8 @@ function gameStart()
 function totalAmount() 
 	{
 		local playAgain=0
-		local DAYZ=2
-		for (( i=1; i<=$DAYZ; i++ ))
+		local DAYS=20
+		for (( i=1; i<=$DAYS; i++ ))
 		do
 			local dailyStake=0 
 			local result=0
@@ -87,10 +87,20 @@ function totalAmount()
 
 		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
+<<<<<<< HEAD
+=======
+
+
+		playAgain=$totalAmt
+		if [ $playAgain >  0  ]
+		then
+			totalAmount
+		else
+			echo "i wann stop "
+		fi 
+>>>>>>> uc7_playingContinueOrNotforNetMonth
 	}
 
-
-#dayWonOrLost
 totalAmount 
 #gameStart
 
