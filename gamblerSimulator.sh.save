@@ -1,0 +1,84 @@
+#!/bin bash -x
+echo "WelCome in gambler simulator"
+
+#Constant
+STAKE=100
+BET=1
+DAYZ=5
+#variables
+totalAmt=0
+dailyStake=0
+result=0
+cash=$STAKE
+
+function winOrLoose()
+	{
+		random=$((RANDOM%2))
+		if [ $random -eq 1 ]
+		then
+			echo "win :" $(( $STAKE + $BET ))
+		else
+			echo "loss :" $(( $STAKE - $BET ))
+		fi
+	}
+
+
+function gameStart()	
+	{
+		while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+		do
+
+			random=$((RANDOM%2))
+			if [ $random -eq 1 ]
+			then
+				echo "win"
+				cash=$(( $cash + $BET ))
+				echo $cash
+			else
+				echo "loss" 
+				cash=$(( $cash - $BET ))
+				echo $cash
+			fi
+
+		done
+	}
+function totalAmount() 
+	{
+		
+		for (( i=1; i<=$DAYZ; i++ ))
+		do 
+			cash=$STAKE
+			while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+			do
+				random=$((RANDOM%2))
+                        	if [ $random -eq 1 ]
+                        	then
+                                	echo "win"
+					cash=$(( $cash + $BET ))
+					echo "$cash"
+                       		else
+                            		echo "loos" 
+					cash=$(( $cash - $BET ))
+					echo "$cash"
+                        	fi
+			done
+
+				result=$(( 100))
+				echo "res" $result
+				echo "dailyStake" dailyStake=$(( $dailyStake + $result ))
+
+		done
+			
+		echo  totalAmt=$(( $totalAmt + $dailyStake ))
+
+	}
+	echo "20"$totalAmt
+
+
+
+
+
+totalAmount
+#winOrLoose
+#gameStart
+
