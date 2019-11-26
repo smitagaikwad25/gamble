@@ -32,7 +32,8 @@ function gameStart()
 	}
 function totalAmount() 
 	{
-		local DAYZ=20
+		local playAgain=0
+		local DAYZ=2
 		for (( i=1; i<=$DAYZ; i++ ))
 		do
 			local dailyStake=0 
@@ -42,6 +43,7 @@ function totalAmount()
 			dailyStake=$(( $cash - $STAKE))
 			dailyProfitOrLoss[$i]="$dailyStake"
 			totalAmt=$(( $totalAmt + $dailyStake ))
+			finalAmt[$i]="$totalAmt"
 		done
 		echo "total amount : $totalAmt"
 
@@ -50,10 +52,35 @@ function totalAmount()
                         echo $k: ${dailyProfitOrLoss["$k"]}
 	        done | sort -n -k1
 
+		echo ${finalAmt[@]} 
+
+		worstStats=`for k in "${!finalAmt[@]}"
+                do
+                        echo $k" : "${finalAmt[$k]}
+	        done | sort -n -k3 | head -1`
+
+
+		luckiestStats=`for f in "${!finalAmt[@]}"
+		do
+		 	echo $f" : "${finalAmt[$f]}
+		done | sort -rn -k3 | head -1`
+
+		echo "best day : $luckiestStats"
+		echo "worst day : $worstStats"
+
+
+		playAgain=$totalAmt
+		if [ $playAgain >  0  ]
+		then
+			totalAmount
+		else
+			echo "i wann stop "
+		fi 
+
 	}
 
 
 #dayWonOrLost
-totalAmount
+totalAmount 
 #gameStart
 
