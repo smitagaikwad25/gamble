@@ -20,7 +20,8 @@ declare -A  finalAmt
 
 function gameStart()	
 	{
-		while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
+		local cash=$STAKE
+		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
@@ -39,12 +40,9 @@ function gameStart()
 	}
 function totalAmount() 
 	{
-		local playAgain=0
 		local DAYS=20
 		for (( i=1; i<=$DAYS; i++ ))
-		do
-			local dailyStake=0 
-			local result=0
+		do 
 			cash=$STAKE
 			while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
                 	do
@@ -87,15 +85,6 @@ function totalAmount()
 
 		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
-
-
-		playAgain=$totalAmt
-		if [ $playAgain >  0  ]
-		then
-			totalAmount
-		else
-			echo "i wann stop "
-		fi 
 	}
 
 totalAmount 
