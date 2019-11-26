@@ -87,8 +87,6 @@ function totalAmount()
 
 		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
-<<<<<<< HEAD
-=======
 
 
 		playAgain=$totalAmt
@@ -98,7 +96,6 @@ function totalAmount()
 		else
 			echo "i wann stop "
 		fi 
->>>>>>> uc7_playingContinueOrNotforNetMonth
 	}
 
 totalAmount 
