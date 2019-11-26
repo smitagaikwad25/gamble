@@ -89,4 +89,3 @@ function totalAmount()
 
 totalAmount 
 #gameStart
-
