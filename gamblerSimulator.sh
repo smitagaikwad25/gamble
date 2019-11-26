@@ -7,13 +7,19 @@ BET=1
 
 #variables
 totalAmt=0
-cash=$STAKE
+
+maxLimit=$((50*100/$STAKE+ $STAKE ))
+echo $maxLimit
+minLimit=$(($maxLimit - $STAKE ))
+echo $minLimit
+
 
 declare -A  dailyProfitOrLoss
 
 function gameStart()	
 	{
-		while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+		local cash=$STAKE
+		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
@@ -32,13 +38,25 @@ function gameStart()
 	}
 function totalAmount() 
 	{
-		local DAYZ=20
-		for (( i=1; i<=$DAYZ; i++ ))
+		local DAYS=20
+		for (( i=1; i<=$DAYS; i++ ))
 		do
 			local dailyStake=0 
-			local result=0
 			cash=$STAKE
-			gameStart
+			while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
+                	do
+
+                        	random=$((RANDOM%2))
+                        	if [ $random -eq 1 ]
+                        	then
+                                	cash=$(( $cash + $BET ))
+                                	echo $cash
+                        	else
+                                	cash=$(( $cash - $BET ))
+                                	echo $cash
+                        	fi
+
+                	done
 			dailyStake=$(( $cash - $STAKE))
 			dailyProfitOrLoss[$i]="$dailyStake"
 			totalAmt=$(( $totalAmt + $dailyStake ))
@@ -53,7 +71,6 @@ function totalAmount()
 	}
 
 
-#dayWonOrLost
 totalAmount
 #gameStart
 
