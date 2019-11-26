@@ -1,35 +1,26 @@
-#!/bin bash -x
+#!/bin/bash -x
+
 echo "WelCome in gambler simulator"
 
 #Constant
 STAKE=100
 BET=1
-<<<<<<< HEAD
-=======
+
 #variables
 totalAmt=0
->>>>>>> uc4_After20DaysKnowTheTotalAmountWonORloose
 
-<<<<<<< HEAD
 maxLimit=$((50*100/$STAKE+ $STAKE ))
 echo $maxLimit
 minLimit=$(($maxLimit - $STAKE ))
 echo $minLimit
-=======
+
+
 declare -A  dailyProfitOrLoss
 declare -A  finalAmt
->>>>>>> uc6_checkLuckiestAndunluckiestDay
 
-function gameStart()
+function gameStart()	
 	{
-<<<<<<< HEAD
-
-		local cash=$STAKE
-		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
-=======
-		local cash=$STAKE
-		while [ $cash -lt $maxlimit ] && [ $cash -gt $minLimit ]
->>>>>>> uc4_After20DaysKnowTheTotalAmountWonORloose
+		while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
@@ -46,18 +37,17 @@ function gameStart()
 
 		done
 	}
-<<<<<<< HEAD
-gameStart
-=======
 function totalAmount() 
 	{
-		local DAYS=20
-		for (( i=1; i<=$DAYS; i++ ))
+		local playAgain=0
+		local DAYZ=2
+		for (( i=1; i<=$DAYZ; i++ ))
 		do
-			local dailyStake=0
-			local cash=$STAKE
-			while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
-	                do
+			local dailyStake=0 
+			local result=0
+			cash=$STAKE
+			while [ $cash -lt  $maxLimit  ] && [ $cash -gt $minLimit ]
+                	do
 
                         	random=$((RANDOM%2))
                         	if [ $random -eq 1 ]
@@ -66,50 +56,41 @@ function totalAmount()
                                 	echo $cash
                         	else 
                                 	cash=$(( $cash - $BET ))
-                                	echo $cash
+                               		echo $cash
                         	fi
 
                 	done
 			dailyStake=$(( $cash - $STAKE))
-			echo "todays profitOrloss  " $dailyStake
+			dailyProfitOrLoss[$i]="$dailyStake"
 			totalAmt=$(( $totalAmt + $dailyStake ))
 			finalAmt[$i]="$totalAmt"
 		done
 		echo "total amount : $totalAmt"
-<<<<<<< HEAD
-	}
 
-
-
-=======
-		echo "displaying daily profit loss"
 		for k in "${!dailyProfitOrLoss[@]}"
                 do
                         echo $k: ${dailyProfitOrLoss["$k"]}
 	        done | sort -n -k1
 
-		echo
-
 		echo ${finalAmt[@]} 
+
 		worstStats=`for k in "${!finalAmt[@]}"
                 do
                         echo $k" : "${finalAmt[$k]}
 	        done | sort -n -k3 | head -1`
 
+
 		luckiestStats=`for f in "${!finalAmt[@]}"
 		do
-		 echo $f" : "${finalAmt[$f]}
+		 	echo $f" : "${finalAmt[$f]}
 		done | sort -rn -k3 | head -1`
 
-		echo "best day :  $luckiestStats"
+		echo "best day : $luckiestStats"
 		echo "worst day : $worstStats"
-
 	}
->>>>>>> uc6_checkLuckiestAndunluckiestDay
 
 
-totalAmount
-#winOrLoose
+#dayWonOrLost
+totalAmount 
 #gameStart
->>>>>>> uc4_After20DaysKnowTheTotalAmountWonORloose
 
