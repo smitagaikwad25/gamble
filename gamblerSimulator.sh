@@ -4,14 +4,17 @@ echo "WelCome in gambler simulator"
 #Constant
 STAKE=100
 BET=1
-#variables
 
-res=0
-res1=0
-cash=$STAKE
-function gameStart()	
+maxLimit=$((50*100/$STAKE+ $STAKE ))
+echo $maxLimit
+minLimit=$(($maxLimit - $STAKE ))
+echo $minLimit
+
+function gameStart()
 	{
-		while [ $cash -lt 150 ] && [ $cash -gt 50 ]
+
+		local cash=$STAKE
+		while [ $cash -lt $maxLimit ] && [ $cash -gt $minLimit ]
 		do
 
 			random=$((RANDOM%2))
